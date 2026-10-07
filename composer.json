@@ -1,0 +1,11 @@
+{
+  "name": "candidate/php-blog",
+  "description": "Simple PHP blog with MySQL and Smarty",
+  "type": "project",
+  "require": {
+    "php": "^8.3",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "smarty/smarty": "^5.0"
+  }
+}
