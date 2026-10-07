@@ -2,16 +2,19 @@
 
 declare(strict_types=1);
 
-use Smarty\Smarty;
+require dirname(__DIR__) . '/src/bootstrap.php';
+require dirname(__DIR__) . '/src/blog.php';
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+$categories = getCategoriesWithPosts($pdo);
 
-$smarty = new Smarty();
+foreach ($categories as $index => $category) {
+	$categories[$index]['posts'] = getLatestPostsByCategory(
+		$pdo,
+		(int) $category['id']
+	);
+}
 
-$smarty->setTemplateDir(dirname(__DIR__) . '/templates');
-$smarty->setCompileDir(dirname(__DIR__) . '/var/templates_c');
-$smarty->setEscapeHtml(true);
-
-$smarty->assign('title', 'Hello World');
+$smarty->assign('title', 'Мой блог');
+$smarty->assign('categories', $categories);
 
 $smarty->display('home.tpl');
