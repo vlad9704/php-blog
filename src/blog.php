@@ -89,3 +89,68 @@ function getCategoryPosts(
 
 	return $statement->fetchAll();
 }
+
+function getPostById(PDO $pdo, int $id): ?array
+{
+	$statement = $pdo->prepare(
+		'SELECT id, image, title, description, content, views, published_at
+         FROM posts
+         WHERE id = ?'
+	);
+
+	$statement->execute([$id]);
+
+	$post = $statement->fetch();
+
+	return $post ?: null;
+}
+
+function incrementPostViews(PDO $pdo, int $id): void
+{
+	$statement = $pdo->prepare(
+		'UPDATE posts SET views = views + 1 WHERE id = ?'
+	);
+
+	$statement->execute([$id]);
+}
+
+function getPostCategories(PDO $pdo, int $postId): array
+{
+	$statement = $pdo->prepare(
+		'SELECT c.id, c.name
+         FROM categories c
+         INNER JOIN post_category pc ON pc.category_id = c.id
+         WHERE pc.post_id = ?
+         ORDER BY c.name ASC'
+	);
+
+	$statement->execute([$postId]);
+
+	return $statement->fetchAll();
+}
+
+function getRelatedPosts(PDO $pdo, int $postId): array
+{
+	$statement = $pdo->prepare(
+		'SELECT p.id, p.image, p.title, p.description
+         FROM posts p
+         WHERE p.id <> :post_id
+           AND EXISTS (
+               SELECT 1
+               FROM post_category pc
+               INNER JOIN post_category current_pc
+                   ON current_pc.category_id = pc.category_id
+               WHERE pc.post_id = p.id
+                 AND current_pc.post_id = :current_post_id
+           )
+         ORDER BY p.published_at DESC, p.id DESC
+         LIMIT 3'
+	);
+
+	$statement->execute([
+		'post_id' => $postId,
+		'current_post_id' => $postId,
+	]);
+
+	return $statement->fetchAll();
+}
