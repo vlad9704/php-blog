@@ -30,6 +30,14 @@ services:
       timeout: 5s
       retries: 20
 
+  assets:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    profiles:
+      - tools
+
 volumes:
   mysql_data:
   smarty_data:

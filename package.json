@@ -1,0 +1,11 @@
+{
+  "name": "php-blog",
+  "private": true,
+  "scripts": {
+    "build": "sass assets/scss/style.scss public/css/style.css --no-source-map --style=compressed",
+    "watch": "sass --watch --poll assets/scss/style.scss:public/css/style.css --no-source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.105.1"
+  }
+}

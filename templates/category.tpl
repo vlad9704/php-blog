@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{$title}</title>
+	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <header>
@@ -31,9 +32,9 @@
 		<button type="submit">Применить</button>
 	</form>
 
-	<div>
+	<div class="posts-grid">
         {foreach $posts as $post}
-			<article>
+	        <article class="post-card">
 				<a href="/post.php?id={$post.id}">
 					<img
 							src="{$post.image}"
@@ -59,7 +60,7 @@
 	</div>
 
     {if $totalPages > 1}
-		<nav aria-label="Страницы статей">
+	    <nav class="pagination" aria-label="Страницы статей">
             {for $pageNumber = 1 to $totalPages}
                 {if $pageNumber == $page}
 					<span aria-current="page">{$pageNumber}</span>

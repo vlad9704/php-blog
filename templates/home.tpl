@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{$title}</title>
+	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <header>
@@ -16,9 +17,9 @@
 			<h2>{$category.name}</h2>
 			<p>{$category.description}</p>
 
-			<div>
+			<div class="posts-grid">
                 {foreach $category.posts as $post}
-					<article>
+	                <article class="post-card">
 						<a href="/post.php?id={$post.id}">
 							<img
 									src="{$post.image}"
@@ -40,7 +41,7 @@
                 {/foreach}
 			</div>
 
-			<a href="/category.php?id={$category.id}">
+			<a class="button" href="/category.php?id={$category.id}">
 				Все статьи
 			</a>
 		</section>
