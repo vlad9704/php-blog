@@ -65,6 +65,7 @@ function getCategoryPosts(
 	int $limit,
 	int $offset
 ): array {
+	// SQL-порядок выбираем только из разрешённых вариантов.
 	$sorting = [
 		'date' => 'p.published_at DESC, p.id DESC',
 		'views' => 'p.views DESC, p.published_at DESC, p.id DESC',
@@ -129,6 +130,7 @@ function getPostCategories(PDO $pdo, int $postId): array
 	return $statement->fetchAll();
 }
 
+// До трёх других статей с общей категорией, сначала самые новые.
 function getRelatedPosts(PDO $pdo, int $postId): array
 {
 	$statement = $pdo->prepare(

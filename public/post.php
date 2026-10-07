@@ -26,6 +26,7 @@ if ($post === null) {
 	exit;
 }
 
+// Каждое открытие страницы считаем отдельным просмотром.
 incrementPostViews($pdo, $postId);
 
 $post = getPostById($pdo, $postId);
